@@ -1,0 +1,47 @@
+{
+  "name":"Mark Kearney",
+  "tasks": [
+    {
+      "name":"Chop Vegetables",
+      "image":"http://www.greenstreetvc.com/12Dec/1chopped_vegetables.jpg",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"1. Chop 2 lb celery\n2. Peel and slice 10 lb potatoes\n3. Peel and cube 4 lb potatoes\n4. Chop 4 lb onions\n5. Peel and julienne 2 lb carrots\n6. Peel and chop 2 lb carrots\n7. Peel and dice 100 cloves garlic"
+    },
+    {
+      "name":"Prepare Chicken Stock",
+      "image":"http://theshiksa.com/images/2010/01/chicken-stock.jpg",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"1. Add 5 lb poultry to large stock pot\n2. Add 2 lb cubed potatoes\n3. Add 2 lb chopped carrots\n4. Add 1 lb chopped onions\n5. Add 1 Tbsp peppercorns\n6. Cover with water and bring to a boil\n7. Reduce heat and simmer for 2 hours, skimming periodically\n8. Strain broth and refrigerate"
+    },
+    {
+      "name":"Grate Cheeses",
+      "image":"http://threadedtogether.com/wp-content/uploads/2013/01/IMG_0161-682x1024.jpg",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"1. Grate and store 4 lb Parmesan\n2. Grate and store 4 lb Mozzarella\n3. Grate and store 2 lb Edam\n4. Grate and store 6 lb Cheddar"
+    },
+    {
+      "name":"Peel and Devein Shrimp",
+      "image":"http://farm2.static.flickr.com/1382/1409454188_b3f55b8eb6.jpg",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"For 10 lb large shrimp:\n1. Peel shrimp\n2. Remove tail\n3. Devein shrimp"
+    },
+    {
+      "name":"Stock Chef Workstations",
+      "image":"http://www.bc.cc.ca.us/student/cdc/images/CDC%20Meals%20and%20Snacks%20prepared%20in%20Renegade%20Kitchen.jpg",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"Equip each workstation with:\n1. Sanitized cutting board\n2. Knife block\n3. Food processor\n4. Large baking sheet"
+    },
+    {
+      "name":"Empty Trash",
+      "image":"http://blogs.westword.com/showandtell/00000000Dumpster-non.JPG",
+      "icon":"kitchen",
+      "complete":false,
+      "description":"1. Remove and replace trashbags from chef workstations\n2. Remove and replace trashbags from waitstaff dropoff area\n3. Remove and replace trashbags from dishwashing area\n4. Remove and replace trashbags from stockroom\n5. Transport all collected bags to dumpster"
+    }
+  ]
+}

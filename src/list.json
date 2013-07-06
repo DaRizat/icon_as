@@ -1,0 +1,47 @@
+{
+  "name":"Mark Kearney",
+  "tasks": [
+    {
+      "name":"Chop Vegetables",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"1. Chop 2 lb celery&nbsp;2. Peel and slice 10 lb potatoes&nbsp;3. Peel and cube 4 lb potatoes;4. Chop 4 lb onions&nbsp;5. Peel and julienne 2 lb carrots&nbsp;6. Peel and chop 2 lb carrots&nbsp;7. Peel and dice 100 cloves garlic"
+    },
+    {
+      "name":"Prepare Chicken Stock",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"1. Add 5 lb poultry to large stock pot&nbsp;2. Add 2 lb cubed potatoes&nbsp;3. Add 2 lb chopped carrots&nbsp;4. Add 1 lb chopped onions&nbsp;5. Add 1 Tbsp peppercorns&nbsp;6. Cover with water and bring to a boil&nbsp;7. Reduce heat and simmer for 2 hours, skimming periodically&nbsp;8. Strain broth and refrigerate"
+    },
+    {
+      "name":"Grate Cheeses",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"1. Grate and store 4 lb Parmesan&nbsp;2. Grate and store 4 lb Mozzarella&nbsp;3. Grate and store 2 lb Edam&nbsp;4. Grate and store 6 lb Cheddar"
+    },
+    {
+      "name":"Peel and Devein Shrimp",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"For 10 lb large shrimp:&nbsp;1. Peel shrimp&nbsp;2. Remove tail&nbsp;3. Devein shrimp"
+    },
+    {
+      "name":"Stock Chefs' Workstations",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"Equip each workstation with:&nbsp;1. Sanitized cutting board&nbsp;2. Knife block&nbsp;3. Food processor&nbsp;4. Large baking sheet"
+    },
+    {
+      "name":"Empty Trash",
+      "picture":"",
+      "icon":"Kitchen",
+      "complete":false,
+      "description":"1. Remove and replace trashbags from chef workstations&nbsp;2. Remove and replace trashbags from waitstaff dropoff area&nbsp;3. Remove and replace trashbags from dishwashing area&nbsp;4. Remove and replace trashbags from stockroom&nbsp;5. Transport all collected bags to dumpster"
+    }
+  ]
+}
