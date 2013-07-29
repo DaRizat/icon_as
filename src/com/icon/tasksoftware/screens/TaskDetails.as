@@ -60,7 +60,7 @@ package com.icon.tasksoftware.screens
 		override protected function initialize():void
 		{
 			header = new Header();
-			header.title = "Task " + Main.selectedItemIndex;
+			header.title = "Task " + Main.selectedItemID;
 			addChild(header);
 			
 			taskIcon = new Image(Main.theme.getIcon(Main.selectedItem));
