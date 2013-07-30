@@ -16,6 +16,7 @@ package com.icon.tasksoftware.Faker
 		private var _user_last_name:Vector.<String> = Vector.<String>(["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "García", "Rodríguez", "Wilson", "Martínez", "Anderson", "Taylor", "Thomas", "Hernández", "Moore", "Martin", "Jackson", "Thompson", "White", "López", "Lee", "González", "Harris", "Clark", "Lewis", "Robinson", "Walker", "Pérez", "Hall", "Young", "Allen", "Sánchez", "Wright", "King", "Scott", "Green", "Baker", "Adams", "Nelson", "Hill", "Ramírez", "Campbell", "Mitchell", "Roberts", "Carter", "Phillips", "Evans", "Turner", "Torres", "Parker", "Collins", "Edwards", "Stewart", "Flores", "Morris", "Nguyen", "Murphy", "Rivera", "Cook", "Rogers", "Morgan", "Peterson", "Cooper", "Reed", "Bailey", "Bell", "Gómez", "Kelly", "Howard", "Ward", "Cox", "Díaz", "Richardson", "Wood", "Watson", "Brooks", "Bennett", "Gray", "James", "Reyes", "Cruz", "Hughes", "Price", "Myers", "Long", "Foster", "Sanders", "Ross", "Morales", "Powell", "Sullivan", "Russell", "Ortiz", "Jenkins", "Gutiérrez", "Perry", "Butler", "Barnes", "Fisher"]);
 		private var _user_name_suffix:Vector.<String> = Vector.<String>(["Jr.", "Sr.", "III"]);
 		private var _user_email_extension:Vector.<String> = Vector.<String>(["yahoo.com", "hotmail.com", "aol.com", "gmail.com", "msn.com", "comcast.net", "hotmail.co.uk", "sbcglobal.net", "yahoo.co.uk", "yahoo.co.in", "bellsouth.net", "verizon.net", "earthlink.net", "cox.net",  "btinternet.com", "charter.net", "ntlworld.com"]);
+		private var _lorem_sentence:Vector.<String> = Vector.<String>(["Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.", "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.", "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.", "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?", "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?", "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.", "Et harum quidem rerum facilis est et expedita distinctio.", "Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.", "Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.", "Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."]);
 		
 		public function Faker(input:Class = null)
 		{
@@ -67,54 +68,72 @@ package com.icon.tasksoftware.Faker
 			return input.substr(0, 1).toUpperCase() + input.substr(1, input.length - 1);
 		}
 		
-		private function get noun():String
+		public function get noun():String
 		{
 			return capitalize(_noun[Math.floor(Math.random() * _noun.length)]);
 		}
 		
-		private function get prefix():String
+		public function get prefix():String
 		{
 			return capitalize(_prefix[Math.floor(Math.random() * _prefix.length)]);
 		}
 		
-		private function get adjective():String
+		public function get adjective():String
 		{
 			return capitalize(_adjective[Math.floor(Math.random() * _adjective.length)]);
 		}
 		
-		private function get verb():String
+		public function get verb():String
 		{
 			return capitalize(_verb[Math.floor(Math.random() * _verb.length)]);
 		}
 		
-		private function get letter():String
+		public function get letter():String
 		{
 			return capitalize(_letter[Math.floor(Math.random() * _letter.length)]);
 		}
 		
-		private function get company_name_suffix():String
+		public function get company_name_suffix():String
 		{
 			return _company_name_suffix[Math.floor(Math.random() * _company_name_suffix.length)];
 		}
 		
-		private function get user_first_name():String
+		public function get user_first_name():String
 		{
 			return capitalize(_user_first_name[Math.floor(Math.random() * _user_first_name.length)]);
 		}
 		
-		private function get user_last_name():String
+		public function get user_last_name():String
 		{
 			return capitalize(_user_last_name[Math.floor(Math.random() * _user_last_name.length)]);
 		}
 		
-		private function get user_name_suffix():String
+		public function get user_name_suffix():String
 		{
 			return capitalize(_user_name_suffix[Math.floor(Math.random() * _user_name_suffix.length)]);
 		}
 		
-		private function get user_email_extension():String
+		public function get user_email_extension():String
 		{
 			return _user_email_extension[Math.floor(Math.random() * _user_email_extension.length)];
+		}
+		
+		public function get lorem_sentence():String
+		{
+			return _lorem_sentence[Math.floor(Math.random() * _lorem_sentence.length)];
+		}
+		
+		public function get lorem_paragraph():String
+		{
+			var sentences:uint = 2 + Math.floor(Math.random() * 4);
+			var output:String = "";
+			
+			for(var i:int = 0; i < sentences; i++)
+			{
+				output += _lorem_sentence[Math.floor(Math.random() * _lorem_sentence.length)];
+			}
+			
+			return output;
 		}
 		
 		public function GenerateID():String
@@ -142,6 +161,31 @@ package com.icon.tasksoftware.Faker
 			else
 			{
 				output = letter + letter + letter + company_name_suffix;
+			}
+			
+			return output;
+		}
+		
+		public function GenerateTeamName():String
+		{
+			var output:String = "";
+			var random:Number = Math.random();
+			
+			if(random < 0.25)
+			{
+				output = noun;
+			}
+			else if(random < 0.5)
+			{
+				output = adjective + " "  + noun;
+			}
+			else if(random < 0.75)
+			{
+				output = noun + " " + noun;
+			}
+			else
+			{
+				output = letter + letter + letter;
 			}
 			
 			return output;
@@ -210,8 +254,28 @@ package com.icon.tasksoftware.Faker
 			{
 				output = noun + Math.floor(Math.random() * 9999).toString() + "@" + user_email_extension;
 			}
-
-
+			
+			return output;
+		}
+		
+		public function GenerateTaskName():String
+		{
+			return verb + noun;
+		}
+		
+		public function GenerateRoleName():String
+		{
+			var output:String = "";
+			var random:Number = Math.random();
+			
+			if(random < 0.5)
+			{
+				output = adjective + " " + noun;
+			}
+			else
+			{
+				output = noun;
+			}
 			
 			return output;
 		}
