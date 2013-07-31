@@ -1,10 +1,10 @@
 package com.icon.tasksoftware.screens.organizations
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
+	import com.icon.tasksoftware.controls.DropDownHeader;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
 	
 	import feathers.controls.Button;
-	import feathers.controls.Header;
 	import feathers.themes.IconMobileTheme;
 	
 	import starling.display.DisplayObject;
@@ -12,7 +12,7 @@ package com.icon.tasksoftware.screens.organizations
 	
 	public class OrganizationNew extends ApplicationScreen
 	{
-		private var header:Header;
+		private var header:DropDownHeader;
 		private var backButton:Button;
 		
 		public function OrganizationNew()
@@ -33,8 +33,7 @@ package com.icon.tasksoftware.screens.organizations
 		
 		override protected function initialize():void
 		{
-			header = new Header();
-			header.title = "New Organization";
+			header = new DropDownHeader(DropDownHeader.ORGANIZATIONS);
 			addChild(header);
 			
 			backButton = new Button();

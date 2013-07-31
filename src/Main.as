@@ -95,18 +95,23 @@ package
 			switch(model_name)
 			{
 				case DropDownHeader.ORGANIZATIONS:
+					nav.clearHistory();
 					nav.showScreen(ORGANIZATION_INDEX);
 					break;
 				case DropDownHeader.ROLES:
+					//nav.clearHistory();
 					//nav.showScreen(ROLE_INDEX);
 					break;
 				case DropDownHeader.TASKS:
+					//nav.clearHistory();
 					//nav.showScreen(TASK_INDEX);
 					break;
 				case DropDownHeader.TEAMS:
+					//nav.clearHistory();
 					//nav.showScreen(TEAM_INDEX);
 					break;
 				case DropDownHeader.USERS:
+					//nav.clearHistory();
 					//nav.showScreen(USER_INDEX);
 					break;
 			}

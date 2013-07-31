@@ -90,7 +90,6 @@ package com.icon.tasksoftware.screens.organizations
 			
 			if(!organization_data)
 			{
-				// GET /organization.json
 				var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ORGANIZATION_INDEX, screen_name);
 				EventHub.instance.relay(new WebServiceRequestEvent(request));
 			}
