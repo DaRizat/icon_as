@@ -1,6 +1,7 @@
 package com.icon.tasksoftware.screens.organizations
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
+	import com.icon.tasksoftware.controls.DropDownHeader;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
@@ -11,7 +12,6 @@ package com.icon.tasksoftware.screens.organizations
 	import com.icon.tasksoftware.screens.organizations.components.OrganizationListItem;
 	
 	import feathers.controls.Button;
-	import feathers.controls.Header;
 	import feathers.controls.List;
 	import feathers.data.ListCollection;
 	import feathers.layout.VerticalLayout;
@@ -22,7 +22,7 @@ package com.icon.tasksoftware.screens.organizations
 	{	
 		private var organization_data:Vector.<Organization>;
 		
-		private var header:Header;
+		private var header:DropDownHeader;
 		private var newButton:Button;
 		private var list:List;
 		
@@ -77,7 +77,7 @@ package com.icon.tasksoftware.screens.organizations
 			buttonEdit = false;
 			buttonDelete = false;
 			
-			header = new Header();
+			header = new DropDownHeader();
 			header.title = "Organizations";
 			addChild(header);
 			

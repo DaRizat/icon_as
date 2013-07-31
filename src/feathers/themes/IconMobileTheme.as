@@ -1,5 +1,7 @@
 package feathers.themes
 {
+	import com.icon.tasksoftware.controls.DropDownHeader;
+	
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
@@ -425,6 +427,7 @@ package feathers.themes
 			this.setInitializerForClass(ProgressBar, progressBarInitializer);
 			this.setInitializerForClass(PickerList, pickerListInitializer);
 			this.setInitializerForClass(Header, headerInitializer);
+			this.setInitializerForClass(DropDownHeader, headerInitializer);
 			this.setInitializerForClass(Callout, calloutInitializer);
 			this.setInitializerForClass(Scroller, scrollerInitializer);
 			this.setInitializerForClass(List, nothingInitializer, PickerList.DEFAULT_CHILD_NAME_LIST);
