@@ -1,9 +1,11 @@
 package
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
+	import com.icon.tasksoftware.controls.DropDownHeader;
 	import com.icon.tasksoftware.controls.ScreenNavigatorWithHistory;
 	import com.icon.tasksoftware.data.WebServiceManager;
 	import com.icon.tasksoftware.data.models.Organization;
+	import com.icon.tasksoftware.events.ApplicationEvent;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.screens.Login;
 	import com.icon.tasksoftware.screens.organizations.OrganizationEdit;
@@ -52,6 +54,8 @@ package
 			WebServiceManager.instance.init(this);
 			
 			addEventListener(Event.ADDED_TO_STAGE, init);
+			
+			EventHub.instance.addEventListener(ApplicationEvent.CHANGE_MODEL, onChangeModel);
 		}
 		
 		private function init(e:Event):void
@@ -83,6 +87,29 @@ package
 			nav.showScreen(LOGIN);
 			
 			var transition:ScreenSlidingStackTransitionManager = new ScreenSlidingStackTransitionManager(nav);
+		}
+		
+		private function onChangeModel(e:ApplicationEvent):void
+		{
+			var model_name:String = e.data as String;
+			switch(model_name)
+			{
+				case DropDownHeader.ORGANIZATIONS:
+					nav.showScreen(ORGANIZATION_INDEX);
+					break;
+				case DropDownHeader.ROLES:
+					//nav.showScreen(ROLE_INDEX);
+					break;
+				case DropDownHeader.TASKS:
+					//nav.showScreen(TASK_INDEX);
+					break;
+				case DropDownHeader.TEAMS:
+					//nav.showScreen(TEAM_INDEX);
+					break;
+				case DropDownHeader.USERS:
+					//nav.showScreen(USER_INDEX);
+					break;
+			}
 		}
 		
 		public function GetScreen(screen:String):ApplicationScreen

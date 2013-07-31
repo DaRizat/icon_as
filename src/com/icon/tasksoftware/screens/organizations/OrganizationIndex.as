@@ -77,8 +77,7 @@ package com.icon.tasksoftware.screens.organizations
 			buttonEdit = false;
 			buttonDelete = false;
 			
-			header = new DropDownHeader();
-			header.title = "Organizations";
+			header = new DropDownHeader(DropDownHeader.ORGANIZATIONS);
 			addChild(header);
 			
 			newButton = new Button();
