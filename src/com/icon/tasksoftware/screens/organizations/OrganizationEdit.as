@@ -66,6 +66,8 @@ package com.icon.tasksoftware.screens.organizations
 		
 		override protected function initialize():void
 		{
+			super.initialize();
+			
 			header = new DropDownHeader(DropDownHeader.ORGANIZATIONS);
 			addChild(header);
 			

@@ -188,7 +188,7 @@ package com.icon.tasksoftware.controls
 				HELPER_TOUCHES_VECTOR.length = 0;
 				return;
 			}
-			if(this._listTouchPointID >= 0)
+			if(_listTouchPointID >= 0)
 			{
 				var touch:Touch;
 				for each(var currentTouch:Touch in touches)

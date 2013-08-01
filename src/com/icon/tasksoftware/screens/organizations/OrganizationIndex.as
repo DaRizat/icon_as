@@ -6,6 +6,7 @@ package com.icon.tasksoftware.screens.organizations
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
 	import com.icon.tasksoftware.data.models.Organization;
+	import com.icon.tasksoftware.events.ApplicationEvent;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.events.WebServiceRequestEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
@@ -74,6 +75,8 @@ package com.icon.tasksoftware.screens.organizations
 		
 		override protected function initialize():void
 		{
+			super.initialize();
+			
 			buttonEdit = false;
 			buttonDelete = false;
 			
@@ -103,7 +106,6 @@ package com.icon.tasksoftware.screens.organizations
 		
 		private function drawList():void
 		{
-			trace("drawList");
 			buttonEdit = false;
 			buttonDelete = false;
 			
@@ -117,25 +119,28 @@ package com.icon.tasksoftware.screens.organizations
 		
 		private function listChanged(e:Event):void
 		{
-			var selectedItem:Object = list.selectedItem;
-			
-			if(buttonEdit)
+			if(list.selectedIndex >= 0)
 			{
-				dispatchEventWith("organizationEdit", false, selectedItem);
+				var selectedItem:Object = list.selectedItem;
+				
+				if(buttonEdit)
+				{
+					dispatchEventWith("organizationEdit", false, selectedItem);
+				}
+				else if(buttonDelete)
+				{
+					dispatchEvent(new ApplicationEvent(ApplicationEvent.DIALOG_OPEN, false, null));
+				}
+				else
+				{
+					dispatchEventWith("organizationShow", false, selectedItem);
+				}
+				
+				buttonEdit = false;
+				buttonDelete = false;
+				
+				list.selectedIndex = -1;
 			}
-			else if(buttonDelete)
-			{
-				// TODO: Implement dialog box for delete confirmation
-			}
-			else
-			{
-				dispatchEventWith("organizationShow", false, selectedItem);
-			}
-			
-			buttonEdit = false;
-			buttonDelete = false;
-			
-			list.selectedIndex = -1;
 		}
 		
 		private function listEdit(e:Event):void
