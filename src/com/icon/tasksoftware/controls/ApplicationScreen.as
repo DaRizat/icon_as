@@ -47,7 +47,7 @@ package com.icon.tasksoftware.controls
 			{
 				if(DeviceCapabilities.isTablet(Starling.current.nativeStage))
 				{
-					popUpContentManager = new CalloutPopUpContentManager();
+					popUpContentManager = new VerticalCenteredPopUpContentManager();
 				}
 				else
 				{

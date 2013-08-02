@@ -1,9 +1,17 @@
 package com.icon.tasksoftware.Faker
 {
 	import com.icon.tasksoftware.Faker.blueprints.OrganizationBlueprint;
+	import com.icon.tasksoftware.Faker.blueprints.RoleBlueprint;
+	import com.icon.tasksoftware.Faker.blueprints.TaskBlueprint;
+	import com.icon.tasksoftware.Faker.blueprints.TeamBlueprint;
+	import com.icon.tasksoftware.Faker.blueprints.UserBlueprint;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.models.Organization;
+	import com.icon.tasksoftware.data.models.Role;
+	import com.icon.tasksoftware.data.models.Task;
+	import com.icon.tasksoftware.data.models.Team;
+	import com.icon.tasksoftware.data.models.User;
 
 	public class Faker
 	{
@@ -58,6 +66,70 @@ package com.icon.tasksoftware.Faker
 					break;
 				case WebServiceEndpoints.ORGANIZATION_INDEX:
 					output = OrganizationBlueprint.generate(4 + Math.floor(Math.random() * 16));
+					break;
+				
+				case WebServiceEndpoints.ROLE_CREATE:
+					output = (request.data && request.data is Role) ? request.data : RoleBlueprint.generate();
+					break;
+				case WebServiceEndpoints.ROLE_READ:
+					output = (request.data && request.data is Role) ? request.data : RoleBlueprint.generate();
+					break;
+				case WebServiceEndpoints.ROLE_UPDATE:
+					output = (request.data && request.data is Role) ? request.data : RoleBlueprint.generate();
+					break;
+				case WebServiceEndpoints.ROLE_DESTROY:
+					output = (request.data && request.data is Role) ? request.data : RoleBlueprint.generate();
+					break;
+				case WebServiceEndpoints.ROLE_INDEX:
+					output = RoleBlueprint.generate(4 + Math.floor(Math.random() * 16));
+					break;
+				
+				case WebServiceEndpoints.TASK_CREATE:
+					output = (request.data && request.data is Task) ? request.data : TaskBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TASK_READ:
+					output = (request.data && request.data is Task) ? request.data : TaskBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TASK_UPDATE:
+					output = (request.data && request.data is Task) ? request.data : TaskBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TASK_DESTROY:
+					output = (request.data && request.data is Task) ? request.data : TaskBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TASK_INDEX:
+					output = TaskBlueprint.generate(4 + Math.floor(Math.random() * 16));
+					break;
+				
+				case WebServiceEndpoints.TEAM_CREATE:
+					output = (request.data && request.data is Team) ? request.data : TeamBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TEAM_READ:
+					output = (request.data && request.data is Team) ? request.data : TeamBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TEAM_UPDATE:
+					output = (request.data && request.data is Team) ? request.data : TeamBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TEAM_DESTROY:
+					output = (request.data && request.data is Team) ? request.data : TeamBlueprint.generate();
+					break;
+				case WebServiceEndpoints.TEAM_INDEX:
+					output = TeamBlueprint.generate(4 + Math.floor(Math.random() * 16));
+					break;
+				
+				case WebServiceEndpoints.USER_CREATE:
+					output = (request.data && request.data is User) ? request.data : UserBlueprint.generate();
+					break;
+				case WebServiceEndpoints.USER_READ:
+					output = (request.data && request.data is User) ? request.data : UserBlueprint.generate();
+					break;
+				case WebServiceEndpoints.USER_UPDATE:
+					output = (request.data && request.data is User) ? request.data : UserBlueprint.generate();
+					break;
+				case WebServiceEndpoints.USER_DESTROY:
+					output = (request.data && request.data is User) ? request.data : UserBlueprint.generate();
+					break;
+				case WebServiceEndpoints.USER_INDEX:
+					output = UserBlueprint.generate(4 + Math.floor(Math.random() * 16));
 					break;
 			}
 			
@@ -261,7 +333,7 @@ package com.icon.tasksoftware.Faker
 		
 		public function GenerateTaskName():String
 		{
-			return verb + noun;
+			return verb + " " + noun;
 		}
 		
 		public function GenerateRoleName():String

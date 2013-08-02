@@ -1,4 +1,4 @@
-package com.icon.tasksoftware.screens.organizations
+package com.icon.tasksoftware.screens.roles
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
 	import com.icon.tasksoftware.controls.DropDownHeader;
@@ -8,7 +8,8 @@ package com.icon.tasksoftware.screens.organizations
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
-	import com.icon.tasksoftware.data.models.Organization;
+	import com.icon.tasksoftware.data.models.Role;
+	import com.icon.tasksoftware.data.models.Role;
 	import com.icon.tasksoftware.events.ApplicationEvent;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.events.WebServiceRequestEvent;
@@ -21,10 +22,10 @@ package com.icon.tasksoftware.screens.organizations
 	
 	import starling.events.Event;
 	
-	public class OrganizationIndex extends ApplicationScreen
+	public class RoleIndex extends ApplicationScreen
 	{	
-		private var organization_data:Vector.<Organization>;
-		private var selectedOrganization:Organization;
+		private var role_data:Vector.<Role>;
+		private var selectedRole:Role;
 		
 		private var header:DropDownHeader;
 		private var newButton:Button;
@@ -33,10 +34,10 @@ package com.icon.tasksoftware.screens.organizations
 		private var buttonEdit:Boolean = false;
 		private var buttonDelete:Boolean = false;
 		
-		public function OrganizationIndex()
+		public function RoleIndex()
 		{
 			super();
-			screen_name = Main.ORGANIZATION_INDEX;
+			screen_name = Main.ROLE_INDEX;
 		}
 		
 		override protected function draw():void
@@ -53,7 +54,7 @@ package com.icon.tasksoftware.screens.organizations
 			list.width = actualWidth - 36;
 			list.height = actualHeight - header.height - newButton.height - 54;
 			
-			if(organization_data)
+			if(role_data)
 			{
 				drawList();
 			}
@@ -68,16 +69,16 @@ package com.icon.tasksoftware.screens.organizations
 				var response:WebServiceResponse = event.data as WebServiceResponse;
 				switch(response.endpoint)
 				{
-					case WebServiceEndpoints.ORGANIZATION_INDEX:
-						organization_data = response.data as Vector.<Organization>;
+					case WebServiceEndpoints.ROLE_INDEX:
+						role_data = response.data as Vector.<Role>;
 						drawList();
 						break;
-					case WebServiceEndpoints.ORGANIZATION_DESTROY:
-						for(var i:int = 0; i < organization_data.length; i++)
+					case WebServiceEndpoints.ROLE_DESTROY:
+						for(var i:int = 0; i < role_data.length; i++)
 						{
-							if(organization_data[i].id == Organization(response.data).id)
+							if(role_data[i].id == Role(response.data).id)
 							{
-								organization_data.splice(i, 1);
+								role_data.splice(i, 1);
 								drawList();
 								break;
 							}
@@ -98,27 +99,27 @@ package com.icon.tasksoftware.screens.organizations
 			buttonEdit = false;
 			buttonDelete = false;
 			
-			header = new DropDownHeader(DropDownHeader.ORGANIZATIONS);
+			header = new DropDownHeader(DropDownHeader.ROLES);
 			addChild(header);
 			
 			newButton = new Button();
-			newButton.label = "Create New Organization";
+			newButton.label = "Create New Role";
 			newButton.addEventListener(Event.TRIGGERED, onNewButton)
 			addChild(newButton);
 			
 			list = new List();
 			addChild(list);
 			
-			if(!organization_data)
+			if(!role_data)
 			{
-				var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ORGANIZATION_INDEX, screen_name);
+				var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ROLE_INDEX, screen_name);
 				EventHub.instance.relay(new WebServiceRequestEvent(request));
 			}
 		}
 		
 		protected function done(e:WebServiceResponseEvent = null):void
 		{
-			organization_data = JSON.parse(e.data as String) as Vector.<Organization>;
+			role_data = JSON.parse(e.data as String) as Vector.<Role>;
 			drawList();
 		}
 		
@@ -127,7 +128,7 @@ package com.icon.tasksoftware.screens.organizations
 			buttonEdit = false;
 			buttonDelete = false;
 			
-			list.dataProvider = new ListCollection(organization_data);
+			list.dataProvider = new ListCollection(role_data);
 			list.addEventListener(Event.CHANGE, listChanged);
 			list.addEventListener("edit", listEdit);
 			list.addEventListener("delete", listDelete);
@@ -139,22 +140,22 @@ package com.icon.tasksoftware.screens.organizations
 		{
 			if(list.selectedIndex >= 0)
 			{
-				selectedOrganization = Organization(list.selectedItem);
+				selectedRole = Role(list.selectedItem);
 				
 				if(buttonEdit)
 				{
-					dispatchEventWith("organizationEdit", false, selectedOrganization);
+					dispatchEventWith("roleEdit", false, selectedRole);
 				}
 				else if(buttonDelete)
 				{
 					var dialogButtons:Vector.<DialogButton> = new Vector.<DialogButton>();
-					dialogButtons.push(new DialogButton("OK", deleteOrganization));
+					dialogButtons.push(new DialogButton("OK", deleteRole));
 					dialogButtons.push(new DialogButton("Cancel", closePopUpDialog));
-					dispatchEvent(new ApplicationEvent(ApplicationEvent.DIALOG_OPEN, false, new DialogData("Delete Organization", "Are you sure you want to delete '" + selectedOrganization.name + "'?", dialogButtons)));
+					dispatchEvent(new ApplicationEvent(ApplicationEvent.DIALOG_OPEN, false, new DialogData("Delete Role", "Are you sure you want to delete '" + selectedRole.name + "'?", dialogButtons)));
 				}
 				else
 				{
-					dispatchEventWith("organizationShow", false, selectedOrganization);
+					dispatchEventWith("roleShow", false, selectedRole);
 				}
 				
 				buttonEdit = false;
@@ -164,9 +165,9 @@ package com.icon.tasksoftware.screens.organizations
 			}
 		}
 		
-		private function deleteOrganization():void
+		private function deleteRole():void
 		{
-			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ORGANIZATION_DESTROY, screen_name, selectedOrganization);
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ROLE_DESTROY, screen_name, selectedRole);
 			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
@@ -182,7 +183,7 @@ package com.icon.tasksoftware.screens.organizations
 		
 		private function onNewButton(e:Event):void
 		{
-			dispatchEventWith("organizationNew");
+			dispatchEventWith("roleNew");
 		}
 	}
 }

@@ -35,7 +35,7 @@ package com.icon.tasksoftware.Faker.blueprints
 			
 			task.id = Faker.instance.GenerateID();
 			task.name = Faker.instance.GenerateTaskName();
-			task.description = Faker.instance.lorem_sentence();
+			task.description = Faker.instance.lorem_sentence;
 			
 			return task;
 		}
