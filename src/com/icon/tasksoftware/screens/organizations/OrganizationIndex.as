@@ -2,6 +2,8 @@ package com.icon.tasksoftware.screens.organizations
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
 	import com.icon.tasksoftware.controls.DropDownHeader;
+	import com.icon.tasksoftware.controls.data.DialogButton;
+	import com.icon.tasksoftware.controls.data.DialogData;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
@@ -22,6 +24,7 @@ package com.icon.tasksoftware.screens.organizations
 	public class OrganizationIndex extends ApplicationScreen
 	{	
 		private var organization_data:Vector.<Organization>;
+		private var selectedOrganization:Organization;
 		
 		private var header:DropDownHeader;
 		private var newButton:Button;
@@ -59,13 +62,28 @@ package com.icon.tasksoftware.screens.organizations
 		override public function onWebServiceResponse(event:WebServiceResponseEvent):void
 		{
 			trace("onWebServiceResponse");
+			
 			if(event.type == WebServiceResponseEvent.STATUS_SUCCESS)
 			{
 				var response:WebServiceResponse = event.data as WebServiceResponse;
-				
-				organization_data = response.data as Vector.<Organization>;
-				
-				drawList();
+				switch(response.endpoint)
+				{
+					case WebServiceEndpoints.ORGANIZATION_INDEX:
+						organization_data = response.data as Vector.<Organization>;
+						drawList();
+						break;
+					case WebServiceEndpoints.ORGANIZATION_DESTROY:
+						for(var i:int = 0; i < organization_data.length; i++)
+						{
+							if(organization_data[i].id == Organization(response.data).id)
+							{
+								organization_data.splice(i, 1);
+								drawList();
+								break;
+							}
+						}
+						break;
+				}
 			}
 			else
 			{
@@ -121,19 +139,23 @@ package com.icon.tasksoftware.screens.organizations
 		{
 			if(list.selectedIndex >= 0)
 			{
-				var selectedItem:Object = list.selectedItem;
+				selectedOrganization = Organization(list.selectedItem);
+				trace(list.selectedIndex + " - " + selectedOrganization.id);
 				
 				if(buttonEdit)
 				{
-					dispatchEventWith("organizationEdit", false, selectedItem);
+					dispatchEventWith("organizationEdit", false, selectedOrganization);
 				}
 				else if(buttonDelete)
 				{
-					dispatchEvent(new ApplicationEvent(ApplicationEvent.DIALOG_OPEN, false, null));
+					var dialogButtons:Vector.<DialogButton> = new Vector.<DialogButton>();
+					dialogButtons.push(new DialogButton("OK", deleteOrganization));
+					dialogButtons.push(new DialogButton("Cancel", closePopUpDialog));
+					dispatchEvent(new ApplicationEvent(ApplicationEvent.DIALOG_OPEN, false, new DialogData("Delete Organization", "Are you sure you want to delete '" + selectedOrganization.name + "'?", dialogButtons)));
 				}
 				else
 				{
-					dispatchEventWith("organizationShow", false, selectedItem);
+					dispatchEventWith("organizationShow", false, selectedOrganization);
 				}
 				
 				buttonEdit = false;
@@ -141,6 +163,12 @@ package com.icon.tasksoftware.screens.organizations
 				
 				list.selectedIndex = -1;
 			}
+		}
+		
+		private function deleteOrganization():void
+		{
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ORGANIZATION_DESTROY, screen_name, selectedOrganization);
+			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
 		private function listEdit(e:Event):void

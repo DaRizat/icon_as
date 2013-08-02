@@ -1,5 +1,6 @@
 package com.icon.tasksoftware.controls
 {
+	import com.icon.tasksoftware.controls.data.DialogData;
 	import com.icon.tasksoftware.events.ApplicationEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
 	
@@ -65,9 +66,7 @@ package com.icon.tasksoftware.controls
 			
 			if(!_dialog)
 			{
-				_dialog = new DialogBox();
-				//_dialog.addEventListener(Event.SCROLL, list_scrollHandler);
-				//_dialog.addEventListener(Event.CHANGE, list_changeHandler);
+				_dialog = new DialogBox(e.data as DialogData);
 				_dialog.addEventListener(TouchEvent.TOUCH, dialog_touchHandler);
 			}
 			
@@ -77,8 +76,8 @@ package com.icon.tasksoftware.controls
 		
 		protected function closePopUpDialog(e:Event = null):void
 		{
-			_dialog.validate();
 			_popUpContentManager.close();
+			_dialog = null;
 		}
 		
 		protected function dialog_touchHandler(event:TouchEvent):void

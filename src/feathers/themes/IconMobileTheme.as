@@ -1,10 +1,12 @@
 package feathers.themes
 {
+	import com.icon.tasksoftware.controls.DialogBox;
 	import com.icon.tasksoftware.controls.DropDownHeader;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ButtonGroup;
@@ -427,6 +429,9 @@ package feathers.themes
 			this.setInitializerForClass(ProgressBar, progressBarInitializer);
 			this.setInitializerForClass(PickerList, pickerListInitializer);
 			this.setInitializerForClass(Header, headerInitializer);
+			this.setInitializerForClass(DialogBox, dialogBoxInitializer);
+			this.setInitializerForClass(Label, dialogBoxTitleLabelInitializer, DialogBox.TITLE_LABEL);
+			this.setInitializerForClass(TextFieldTextRenderer, dialogBoxDescriptionLabelInitializer, DialogBox.DESCRIPTION_LABEL);
 			this.setInitializerForClass(DropDownHeader, headerInitializer);
 			this.setInitializerForClass(Callout, calloutInitializer);
 			this.setInitializerForClass(Scroller, scrollerInitializer);
@@ -999,7 +1004,29 @@ package feathers.themes
 			header.backgroundSkin = backgroundSkin;
 			header.titleProperties.textFormat = this.headerTextFormat;
 		}
-
+		
+		protected function dialogBoxInitializer(dialogBox:DialogBox):void
+		{
+			const backgroundSkin:Scale9Image = new Scale9Image(this.buttonSelectedUpSkinTextures, this.scale);
+			backgroundSkin.width = root.stage.stageWidth * 0.8;
+			backgroundSkin.height = root.stage.stageHeight * 0.4;
+			backgroundSkin.x = root.stage.stageWidth * 0.1;
+			backgroundSkin.y = root.stage.stageHeight * 0.3;
+			
+			dialogBox.backgroundSkin = backgroundSkin;
+		}
+		
+		protected function dialogBoxTitleLabelInitializer(label:Label):void
+		{
+			label.textRendererProperties.textFormat = this.largeDarkTextFormat;
+			label.textRendererProperties.textFormat.align = TextFormatAlign.CENTER;
+		}
+		
+		protected function dialogBoxDescriptionLabelInitializer(renderer:TextFieldTextRenderer):void
+		{
+			renderer.textFormat = this.smallDarkTextFormat;
+		}
+		
 		protected function pickerListInitializer(list:PickerList):void
 		{
 			if(DeviceCapabilities.isTablet(Starling.current.nativeStage))

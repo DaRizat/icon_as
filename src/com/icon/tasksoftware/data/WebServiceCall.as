@@ -63,7 +63,7 @@ package com.icon.tasksoftware.data
 				data = Faker.instance.GenerateResponse(_request);
 			}
 			
-			var response:WebServiceResponse = new WebServiceResponse(data, _request.screen);
+			var response:WebServiceResponse = new WebServiceResponse(_request.endpoint, data, _request.screen);
 			var status:String = WebServiceResponseEvent.STATUS_SUCCESS;
 			
 			_manager.onWebServiceResponse(response, status, this);

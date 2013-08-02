@@ -3,6 +3,7 @@ package com.icon.tasksoftware.Faker
 	import com.icon.tasksoftware.Faker.blueprints.OrganizationBlueprint;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
+	import com.icon.tasksoftware.data.models.Organization;
 
 	public class Faker
 	{
@@ -44,16 +45,16 @@ package com.icon.tasksoftware.Faker
 			switch(request.endpoint)
 			{
 				case WebServiceEndpoints.ORGANIZATION_CREATE:
-					output = OrganizationBlueprint.generate();
+					output = (request.data && request.data is Organization) ? request.data : OrganizationBlueprint.generate();
 					break;
 				case WebServiceEndpoints.ORGANIZATION_READ:
-					output = OrganizationBlueprint.generate();
+					output = (request.data && request.data is Organization) ? request.data : OrganizationBlueprint.generate();
 					break;
 				case WebServiceEndpoints.ORGANIZATION_UPDATE:
-					output = OrganizationBlueprint.generate();
+					output = (request.data && request.data is Organization) ? request.data : OrganizationBlueprint.generate();
 					break;
 				case WebServiceEndpoints.ORGANIZATION_DESTROY:
-					output = OrganizationBlueprint.generate();
+					output = (request.data && request.data is Organization) ? request.data : OrganizationBlueprint.generate();
 					break;
 				case WebServiceEndpoints.ORGANIZATION_INDEX:
 					output = OrganizationBlueprint.generate(4 + Math.floor(Math.random() * 16));
