@@ -35,6 +35,14 @@ package com.icon.tasksoftware.data
 		public static var USER_DESTROY:String = "USER_DESTROY";
 		public static var USER_INDEX:String = "USER_INDEX";
 		
+		public static function construct(endpoint:String, ids:Object):String
+		{
+			var output:String = endpoint;
+			
+			// TODO: Regex replace hard-coded ids in endpoint strings with provided ids
+			
+			return output;
+		}
 		
 		public function WebServiceEndpoints()
 		{

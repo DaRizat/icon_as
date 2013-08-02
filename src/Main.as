@@ -401,6 +401,7 @@ package
 		private function loadOrganizationShow(item:Object, ignoreHistory:Boolean = false):void
 		{
 			selectedOrganization = Organization(item);
+			organization_show_screen.organization_id = selectedOrganization.id;
 			if(ignoreHistory)
 			{
 				nav.showScreenWithoutHistory(ORGANIZATION_SHOW);
@@ -409,7 +410,6 @@ package
 			{
 				nav.showScreen(ORGANIZATION_SHOW);
 			}
-			OrganizationShow(nav.activeScreen).organization = selectedOrganization;
 		}
 		
 		private function onOrganizationNew(e:Event, item:Object):void
@@ -438,6 +438,7 @@ package
 		private function loadOrganizationEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
 			selectedOrganization = Organization(item);
+			organization_edit_screen.organization_id = selectedOrganization.id;
 			if(ignoreHistory)
 			{
 				nav.showScreenWithoutHistory(ORGANIZATION_EDIT);
@@ -446,7 +447,6 @@ package
 			{
 				nav.showScreen(ORGANIZATION_EDIT);
 			}
-			OrganizationEdit(nav.activeScreen).organization = selectedOrganization;
 		}
 		
 		//	ROLE

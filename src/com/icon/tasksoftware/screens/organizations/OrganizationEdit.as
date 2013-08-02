@@ -2,7 +2,12 @@ package com.icon.tasksoftware.screens.organizations
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
 	import com.icon.tasksoftware.controls.DropDownHeader;
+	import com.icon.tasksoftware.data.WebServiceEndpoints;
+	import com.icon.tasksoftware.data.WebServiceRequest;
+	import com.icon.tasksoftware.data.WebServiceResponse;
 	import com.icon.tasksoftware.data.models.Organization;
+	import com.icon.tasksoftware.events.EventHub;
+	import com.icon.tasksoftware.events.WebServiceRequestEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
 	
 	import feathers.controls.Button;
@@ -25,11 +30,28 @@ package com.icon.tasksoftware.screens.organizations
 		private var submitButton:Button;
 		
 		private var _organization:Organization;
+		private var _organization_id:String;
 		
 		public function OrganizationEdit()
 		{
 			super();
 			screen_name = Main.ORGANIZATION_EDIT;
+			
+			addEventListener(Event.ADDED_TO_STAGE, reset);
+		}
+		
+		private function reset(e:Event):void
+		{
+			organization = null;
+			
+			nameInput.isEnabled = false;
+			cancelButton.isEnabled = false;
+			submitButton.isEnabled = false;
+			
+			nameInput.text = "";
+			
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.construct(WebServiceEndpoints.ORGANIZATION_READ, {organization:organization_id}), screen_name);
+			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
 		override protected function draw():void
@@ -61,7 +83,25 @@ package com.icon.tasksoftware.screens.organizations
 		
 		override public function onWebServiceResponse(event:WebServiceResponseEvent):void
 		{
-			
+			if(event.type == WebServiceResponseEvent.STATUS_SUCCESS)
+			{
+				var response:WebServiceResponse = event.data as WebServiceResponse;
+				switch(response.endpoint)
+				{
+					case WebServiceEndpoints.ORGANIZATION_UPDATE:
+						dispatchEventWith("back", false, organization);
+						break;
+					case WebServiceEndpoints.ORGANIZATION_READ:
+						organization = Organization(response.data);
+						nameInput.text = organization.name;
+						
+						nameInput.isEnabled = true;
+						cancelButton.isEnabled = true;
+						submitButton.isEnabled = true;
+						
+						break;
+				}
+			}
 		}
 		
 		override protected function initialize():void
@@ -82,10 +122,6 @@ package com.icon.tasksoftware.screens.organizations
 			addChild(nameLabel);
 			
 			nameInput = new TextInput();
-			if(organization)
-			{
-				nameInput.text = organization.name;
-			}
 			addChild(nameInput);
 			
 			cancelButton = new Button();
@@ -111,16 +147,28 @@ package com.icon.tasksoftware.screens.organizations
 		
 		private function onSubmit(e:Event):void
 		{
+			nameInput.isEnabled = false;
+			cancelButton.isEnabled = false;
+			submitButton.isEnabled = false;
+			
 			// TODO: validate input
+			
 			organization.name = nameInput.text;
-			// TODO: POST /organization/{organization.id}
-			dispatchEventWith("back", false, organization);
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ORGANIZATION_UPDATE, screen_name, organization);
+			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
 		public function get organization():Organization { return _organization; }
 		public function set organization(value:Organization):void
 		{
 			_organization = value;
+			invalidate( INVALIDATION_FLAG_DATA );
+		}
+		
+		public function get organization_id():String { return _organization_id; }
+		public function set organization_id(value:String):void
+		{
+			_organization_id = value;
 			invalidate( INVALIDATION_FLAG_DATA );
 		}
 	}
