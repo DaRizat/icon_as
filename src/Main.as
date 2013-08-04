@@ -20,7 +20,10 @@ package
 	import com.icon.tasksoftware.screens.roles.RoleIndex;
 	import com.icon.tasksoftware.screens.roles.RoleNew;
 	import com.icon.tasksoftware.screens.roles.RoleShow;
+	import com.icon.tasksoftware.screens.tasks.TaskEdit;
 	import com.icon.tasksoftware.screens.tasks.TaskIndex;
+	import com.icon.tasksoftware.screens.tasks.TaskNew;
+	import com.icon.tasksoftware.screens.tasks.TaskShow;
 	import com.icon.tasksoftware.screens.teams.TeamIndex;
 	import com.icon.tasksoftware.screens.users.UserIndex;
 	
@@ -91,15 +94,15 @@ package
 		private var role_new_screen:RoleNew;
 		private var role_show_screen:RoleShow;
 		
-		//private var task_edit:ScreenNavigatorItem;
+		private var task_edit:ScreenNavigatorItem;
 		private var task_index:ScreenNavigatorItem;
-		//private var task_new:ScreenNavigatorItem;
-		//private var task_show:ScreenNavigatorItem;
+		private var task_new:ScreenNavigatorItem;
+		private var task_show:ScreenNavigatorItem;
 		
-		//private var task_edit_screen:TaskEdit;
+		private var task_edit_screen:TaskEdit;
 		private var task_index_screen:TaskIndex;
-		//private var task_new_screen:TaskNew;
-		//private var task_show_screen:TaskShow;
+		private var task_new_screen:TaskNew;
+		private var task_show_screen:TaskShow;
 		
 		//private var team_edit:ScreenNavigatorItem;
 		private var team_index:ScreenNavigatorItem;
@@ -175,21 +178,21 @@ package
 			role_show = new ScreenNavigatorItem(role_show_screen, {back:onBack, roleEdit:onRoleEdit}, null);
 			nav.addScreen(ROLE_SHOW, role_show);
 			
-			//task_edit_screen = new TaskEdit();
-			//task_edit = new ScreenNavigatorItem(task_edit_screen, {back:onBack}, null);
-			//nav.addScreen(TASK_EDIT, task_edit);
+			task_edit_screen = new TaskEdit();
+			task_edit = new ScreenNavigatorItem(task_edit_screen, {back:onBack}, null);
+			nav.addScreen(TASK_EDIT, task_edit);
 			
 			task_index_screen = new TaskIndex();
 			task_index = new ScreenNavigatorItem(task_index_screen, {back:onBack, taskShow:onTaskShow, taskNew:onTaskNew, taskEdit:onTaskEdit}, null);
 			nav.addScreen(TASK_INDEX, task_index);
 			
-			//task_new_screen = new TaskNew();
-			//task_new = new ScreenNavigatorItem(task_new_screen, {back:onBack}, null);
-			//nav.addScreen(TASK_NEW, task_new);
+			task_new_screen = new TaskNew();
+			task_new = new ScreenNavigatorItem(task_new_screen, {back:onBack}, null);
+			nav.addScreen(TASK_NEW, task_new);
 			
-			//task_show_screen = new TaskShow();
-			//task_show = new ScreenNavigatorItem(task_show_screen, {back:onBack, taskEdit:onTaskEdit}, null);
-			//nav.addScreen(TASK_SHOW, task_show);
+			task_show_screen = new TaskShow();
+			task_show = new ScreenNavigatorItem(task_show_screen, {back:onBack, taskEdit:onTaskEdit}, null);
+			nav.addScreen(TASK_SHOW, task_show);
 			
 			//team_edit_screen = new TeamEdit();
 			//team_edit = new ScreenNavigatorItem(team_edit_screen, {back:onBack}, null);
@@ -286,18 +289,18 @@ package
 				case ROLE_SHOW:
 					output = role_show_screen;
 					break;
-				//case TASK_EDIT:
-				//	output = task_edit_screen;
-				//	break;
+				case TASK_EDIT:
+					output = task_edit_screen;
+					break;
 				case TASK_INDEX:
 					output = task_index_screen;
 					break;
-				//case TASK_NEW:
-				//	output = task_new_screen;
-				//	break;
-				//case TASK_SHOW:
-				//	output = task_show_screen;
-				//	break;
+				case TASK_NEW:
+					output = task_new_screen;
+					break;
+				case TASK_SHOW:
+					output = task_show_screen;
+					break;
 				//case TEAM_EDIT:
 				//	output = team_edit_screen;
 				//	break;
@@ -364,15 +367,15 @@ package
 				case ROLE_SHOW:
 					loadRoleShow(item, true);
 					break;
-				//case TASK_EDIT:
-				//	loadTaskEdit(item, true);
-				//	break;
-				//case TASK_NEW:
-				//	loadTaskNew(item, true);
-				//	break;
-				//case TASK_SHOW:
-				//	loadTaskShow(item, true);
-				//	break;
+				case TASK_EDIT:
+					loadTaskEdit(item, true);
+					break;
+				case TASK_NEW:
+					loadTaskNew(item, true);
+					break;
+				case TASK_SHOW:
+					loadTaskShow(item, true);
+					break;
 				//case TEAM_EDIT:
 				//	loadTeamEdit(item, true);
 				//	break;
@@ -462,6 +465,7 @@ package
 		private function loadRoleShow(item:Object, ignoreHistory:Boolean = false):void
 		{
 			selectedRole = Role(item);
+			role_show_screen.role_id = selectedRole.id;
 			if(ignoreHistory)
 			{
 				nav.showScreenWithoutHistory(ROLE_SHOW);
@@ -470,7 +474,6 @@ package
 			{
 				nav.showScreen(ROLE_SHOW);
 			}
-			RoleShow(nav.activeScreen).role = selectedRole;
 		}
 		
 		private function onRoleNew(e:Event, item:Object):void
@@ -499,6 +502,7 @@ package
 		private function loadRoleEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
 			selectedRole = Role(item);
+			role_edit_screen.role_id = selectedRole.id;
 			if(ignoreHistory)
 			{
 				nav.showScreenWithoutHistory(ROLE_EDIT);
@@ -507,7 +511,6 @@ package
 			{
 				nav.showScreen(ROLE_EDIT);
 			}
-			RoleEdit(nav.activeScreen).role = selectedRole;
 		}
 		
 		//	TASK
@@ -518,16 +521,16 @@ package
 		
 		private function loadTaskShow(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTask = Task(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TASK_SHOW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TASK_SHOW);
-		//	}
-		//	TaskShow(nav.activeScreen).task = selectedTask;
+			selectedTask = Task(item);
+			task_show_screen.task_id = selectedTask.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TASK_SHOW);
+			}
+			else
+			{
+				nav.showScreen(TASK_SHOW);
+			}
 		}
 		
 		private function onTaskNew(e:Event, item:Object):void
@@ -537,15 +540,15 @@ package
 		
 		private function loadTaskNew(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTask = Task(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TASK_NEW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TASK_NEW);
-		//	}
+			selectedTask = Task(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TASK_NEW);
+			}
+			else
+			{
+				nav.showScreen(TASK_NEW);
+			}
 		}
 		
 		private function onTaskEdit(e:Event, item:Object):void
@@ -555,16 +558,16 @@ package
 		
 		private function loadTaskEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTask = Task(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TASK_EDIT);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TASK_EDIT);
-		//	}
-		//	TaskEdit(nav.activeScreen).task = selectedTask;
+			selectedTask = Task(item);
+			task_edit_screen.task_id = selectedTask.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TASK_EDIT);
+			}
+			else
+			{
+				nav.showScreen(TASK_EDIT);
+			}
 		}
 		
 		//	TEAM
@@ -576,6 +579,7 @@ package
 		private function loadTeamShow(item:Object, ignoreHistory:Boolean = false):void
 		{
 		//	selectedTeam = Team(item);
+		//	team_show_screen.team_id = selectedTeam.id;
 		//	if(ignoreHistory)
 		//	{
 		//		nav.showScreenWithoutHistory(TEAM_SHOW);
@@ -584,7 +588,6 @@ package
 		//	{
 		//		nav.showScreen(TEAM_SHOW);
 		//	}
-		//	TeamShow(nav.activeScreen).team = selectedTeam;
 		}
 		
 		private function onTeamNew(e:Event, item:Object):void
@@ -613,6 +616,7 @@ package
 		private function loadTeamEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
 		//	selectedTeam = Team(item);
+		//	team_edit_screen.team_id = selectedTeam.id;
 		//	if(ignoreHistory)
 		//	{
 		//		nav.showScreenWithoutHistory(TEAM_EDIT);
@@ -621,7 +625,6 @@ package
 		//	{
 		//		nav.showScreen(TEAM_EDIT);
 		//	}
-		//	TeamEdit(nav.activeScreen).team = selectedTeam;
 		}
 		
 		//	USER
@@ -633,6 +636,7 @@ package
 		private function loadUserShow(item:Object, ignoreHistory:Boolean = false):void
 		{
 		//	selectedUser = User(item);
+		//	user_show_screen.user_id = selectedUser.id;
 		//	if(ignoreHistory)
 		//	{
 		//		nav.showScreenWithoutHistory(USER_SHOW);
@@ -641,7 +645,6 @@ package
 		//	{
 		//		nav.showScreen(USER_SHOW);
 		//	}
-		//	UserShow(nav.activeScreen).user = selectedUser;
 		}
 		
 		private function onUserNew(e:Event, item:Object):void
@@ -670,6 +673,7 @@ package
 		private function loadUserEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
 		//	selectedUser = User(item);
+		//	user_edit_screen.user_id = selectedUser.id;
 		//	if(ignoreHistory)
 		//	{
 		//		nav.showScreenWithoutHistory(USER_EDIT);
@@ -678,7 +682,6 @@ package
 		//	{
 		//		nav.showScreen(USER_EDIT);
 		//	}
-		//	UserEdit(nav.activeScreen).user = selectedUser;
 		}
 		
 		private function onLogin(e:Event):void
