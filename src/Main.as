@@ -16,7 +16,10 @@ package
 	import com.icon.tasksoftware.screens.organizations.OrganizationIndex;
 	import com.icon.tasksoftware.screens.organizations.OrganizationNew;
 	import com.icon.tasksoftware.screens.organizations.OrganizationShow;
+	import com.icon.tasksoftware.screens.roles.RoleEdit;
 	import com.icon.tasksoftware.screens.roles.RoleIndex;
+	import com.icon.tasksoftware.screens.roles.RoleNew;
+	import com.icon.tasksoftware.screens.roles.RoleShow;
 	import com.icon.tasksoftware.screens.tasks.TaskIndex;
 	import com.icon.tasksoftware.screens.teams.TeamIndex;
 	import com.icon.tasksoftware.screens.users.UserIndex;
@@ -37,29 +40,25 @@ package
 		public static const ORGANIZATION_NEW:String = "ORGANIZATION_NEW";
 		public static const ORGANIZATION_SHOW:String = "ORGANIZATION_SHOW";
 		
-		public static var ROLE_CREATE:String = "ROLE_CREATE";
-		public static var ROLE_READ:String = "ROLE_READ";
-		public static var ROLE_UPDATE:String = "ROLE_UPDATE";
-		public static var ROLE_DESTROY:String = "ROLE_DESTROY";
+		public static var ROLE_EDIT:String = "ROLE_EDIT";
 		public static var ROLE_INDEX:String = "ROLE_INDEX";
+		public static var ROLE_NEW:String = "ROLE_NEW";
+		public static var ROLE_SHOW:String = "ROLE_SHOW";
 		
-		public static var TASK_CREATE:String = "TASK_CREATE";
-		public static var TASK_READ:String = "TASK_READ";
-		public static var TASK_UPDATE:String = "TASK_UPDATE";
-		public static var TASK_DESTROY:String = "TASK_DESTROY";
+		public static var TASK_EDIT:String = "TASK_EDIT";
 		public static var TASK_INDEX:String = "TASK_INDEX";
+		public static var TASK_NEW:String = "TASK_NEW";
+		public static var TASK_SHOW:String = "TASK_SHOW";
 		
-		public static var TEAM_CREATE:String = "TEAM_CREATE";
-		public static var TEAM_READ:String = "TEAM_READ";
-		public static var TEAM_UPDATE:String = "TEAM_UPDATE";
-		public static var TEAM_DESTROY:String = "TEAM_DESTROY";
+		public static var TEAM_EDIT:String = "TEAM_EDIT";
 		public static var TEAM_INDEX:String = "TEAM_INDEX";
+		public static var TEAM_NEW:String = "TEAM_NEW";
+		public static var TEAM_SHOW:String = "TEAM_SHOW";
 		
-		public static var USER_CREATE:String = "USER_CREATE";
-		public static var USER_READ:String = "USER_READ";
-		public static var USER_UPDATE:String = "USER_UPDATE";
-		public static var USER_DESTROY:String = "USER_DESTROY";
+		public static var USER_EDIT:String = "USER_EDIT";
 		public static var USER_INDEX:String = "USER_INDEX";
+		public static var USER_NEW:String = "USER_NEW";
+		public static var USER_SHOW:String = "USER_SHOW";
 		
 		private var nav:ScreenNavigatorWithHistory;
 		
@@ -82,15 +81,15 @@ package
 		private var organization_new_screen:OrganizationNew;
 		private var organization_show_screen:OrganizationShow;
 		
-		//private var role_edit:ScreenNavigatorItem;
+		private var role_edit:ScreenNavigatorItem;
 		private var role_index:ScreenNavigatorItem;
-		//private var role_new:ScreenNavigatorItem;
-		//private var role_show:ScreenNavigatorItem;
+		private var role_new:ScreenNavigatorItem;
+		private var role_show:ScreenNavigatorItem;
 		
-		//private var role_edit_screen:RoleEdit;
+		private var role_edit_screen:RoleEdit;
 		private var role_index_screen:RoleIndex;
-		//private var role_new_screen:RoleNew;
-		//private var role_show_screen:RoleShow;
+		private var role_new_screen:RoleNew;
+		private var role_show_screen:RoleShow;
 		
 		//private var task_edit:ScreenNavigatorItem;
 		private var task_index:ScreenNavigatorItem;
@@ -160,21 +159,21 @@ package
 			organization_show = new ScreenNavigatorItem(organization_show_screen, {back:onBack, organizationEdit:onOrganizationEdit}, null);
 			nav.addScreen(ORGANIZATION_SHOW, organization_show);
 			
-			//role_edit_screen = new RoleEdit();
-			//role_edit = new ScreenNavigatorItem(role_edit_screen, {back:onBack}, null);
-			//nav.addScreen(ROLE_EDIT, role_edit);
+			role_edit_screen = new RoleEdit();
+			role_edit = new ScreenNavigatorItem(role_edit_screen, {back:onBack}, null);
+			nav.addScreen(ROLE_EDIT, role_edit);
 			
 			role_index_screen = new RoleIndex();
 			role_index = new ScreenNavigatorItem(role_index_screen, {back:onBack, roleShow:onRoleShow, roleNew:onRoleNew, roleEdit:onRoleEdit}, null);
 			nav.addScreen(ROLE_INDEX, role_index);
 			
-			//role_new_screen = new RoleNew();
-			//role_new = new ScreenNavigatorItem(role_new_screen, {back:onBack}, null);
-			//nav.addScreen(ROLE_NEW, role_new);
+			role_new_screen = new RoleNew();
+			role_new = new ScreenNavigatorItem(role_new_screen, {back:onBack}, null);
+			nav.addScreen(ROLE_NEW, role_new);
 			
-			//role_show_screen = new RoleShow();
-			//role_show = new ScreenNavigatorItem(role_show_screen, {back:onBack, roleEdit:onRoleEdit}, null);
-			//nav.addScreen(ROLE_SHOW, role_show);
+			role_show_screen = new RoleShow();
+			role_show = new ScreenNavigatorItem(role_show_screen, {back:onBack, roleEdit:onRoleEdit}, null);
+			nav.addScreen(ROLE_SHOW, role_show);
 			
 			//task_edit_screen = new TaskEdit();
 			//task_edit = new ScreenNavigatorItem(task_edit_screen, {back:onBack}, null);
@@ -257,7 +256,7 @@ package
 			}
 		}
 		
-		public function GetScreen(screen:String):ApplicationScreen
+		public function GetScreen(screen:String, active:Boolean = false):ApplicationScreen
 		{
 			var output:ApplicationScreen;
 			
@@ -275,18 +274,18 @@ package
 				case ORGANIZATION_SHOW:
 					output = organization_show_screen;
 					break;
-				//case ROLE_EDIT:
-				//	output = role_edit_screen;
-				//	break;
+				case ROLE_EDIT:
+					output = role_edit_screen;
+					break;
 				case ROLE_INDEX:
 					output = role_index_screen;
 					break;
-				//case ROLE_NEW:
-				//	output = role_new_screen;
-				//	break;
-				//case ROLE_SHOW:
-				//	output = role_show_screen;
-				//	break;
+				case ROLE_NEW:
+					output = role_new_screen;
+					break;
+				case ROLE_SHOW:
+					output = role_show_screen;
+					break;
 				//case TASK_EDIT:
 				//	output = task_edit_screen;
 				//	break;
@@ -335,6 +334,11 @@ package
 					break;
 			}
 			
+			if(active)
+			{
+				output = (output == ApplicationScreen(nav.activeScreen)) ? output : null;
+			}
+			
 			return output;
 		}
 		
@@ -351,15 +355,15 @@ package
 				case ORGANIZATION_SHOW:
 					loadOrganizationShow(item, true);
 					break;
-				//case ROLE_EDIT:
-				//	loadRoleEdit(item, true);
-				//	break;
-				//case ROLE_NEW:
-				//	loadRoleNew(item, true);
-				//	break;
-				//case ROLE_SHOW:
-				//	loadRoleShow(item, true);
-				//	break;
+				case ROLE_EDIT:
+					loadRoleEdit(item, true);
+					break;
+				case ROLE_NEW:
+					loadRoleNew(item, true);
+					break;
+				case ROLE_SHOW:
+					loadRoleShow(item, true);
+					break;
 				//case TASK_EDIT:
 				//	loadTaskEdit(item, true);
 				//	break;
@@ -457,16 +461,16 @@ package
 		
 		private function loadRoleShow(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedRole = Role(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(ROLE_SHOW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(ROLE_SHOW);
-		//	}
-		//	RoleShow(nav.activeScreen).role = selectedRole;
+			selectedRole = Role(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(ROLE_SHOW);
+			}
+			else
+			{
+				nav.showScreen(ROLE_SHOW);
+			}
+			RoleShow(nav.activeScreen).role = selectedRole;
 		}
 		
 		private function onRoleNew(e:Event, item:Object):void
@@ -476,15 +480,15 @@ package
 		
 		private function loadRoleNew(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedRole = Role(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(ROLE_NEW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(ROLE_NEW);
-		//	}
+			selectedRole = Role(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(ROLE_NEW);
+			}
+			else
+			{
+				nav.showScreen(ROLE_NEW);
+			}
 		}
 		
 		private function onRoleEdit(e:Event, item:Object):void
@@ -494,16 +498,16 @@ package
 		
 		private function loadRoleEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedRole = Role(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(ROLE_EDIT);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(ROLE_EDIT);
-		//	}
-		//	RoleEdit(nav.activeScreen).role = selectedRole;
+			selectedRole = Role(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(ROLE_EDIT);
+			}
+			else
+			{
+				nav.showScreen(ROLE_EDIT);
+			}
+			RoleEdit(nav.activeScreen).role = selectedRole;
 		}
 		
 		//	TASK

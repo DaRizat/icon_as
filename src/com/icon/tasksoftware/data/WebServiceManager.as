@@ -47,7 +47,7 @@ package com.icon.tasksoftware.data
 		
 		public function onWebServiceResponse(response:WebServiceResponse, status:String, call:WebServiceCall):void
 		{
-			var screen:ApplicationScreen = _main.GetScreen(response.screen);
+			var screen:ApplicationScreen = _main.GetScreen(response.screen, true);
 			if(screen)
 			{
 				screen.dispatchEvent(new WebServiceResponseEvent(response, status));

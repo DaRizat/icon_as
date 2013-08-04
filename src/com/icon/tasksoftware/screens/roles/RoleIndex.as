@@ -38,6 +38,18 @@ package com.icon.tasksoftware.screens.roles
 		{
 			super();
 			screen_name = Main.ROLE_INDEX;
+			
+			addEventListener(Event.ADDED_TO_STAGE, reset);
+		}
+		
+		private function reset(e:Event):void
+		{
+			role_data = null;
+			
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ROLE_INDEX, screen_name);
+			EventHub.instance.relay(new WebServiceRequestEvent(request));
+			
+			drawList();
 		}
 		
 		override protected function draw():void
@@ -62,8 +74,6 @@ package com.icon.tasksoftware.screens.roles
 		
 		override public function onWebServiceResponse(event:WebServiceResponseEvent):void
 		{
-			trace("onWebServiceResponse");
-			
 			if(event.type == WebServiceResponseEvent.STATUS_SUCCESS)
 			{
 				var response:WebServiceResponse = event.data as WebServiceResponse;
@@ -109,12 +119,6 @@ package com.icon.tasksoftware.screens.roles
 			
 			list = new List();
 			addChild(list);
-			
-			if(!role_data)
-			{
-				var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ROLE_INDEX, screen_name);
-				EventHub.instance.relay(new WebServiceRequestEvent(request));
-			}
 		}
 		
 		protected function done(e:WebServiceResponseEvent = null):void
