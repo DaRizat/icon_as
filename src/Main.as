@@ -28,7 +28,10 @@ package
 	import com.icon.tasksoftware.screens.teams.TeamIndex;
 	import com.icon.tasksoftware.screens.teams.TeamNew;
 	import com.icon.tasksoftware.screens.teams.TeamShow;
+	import com.icon.tasksoftware.screens.users.UserEdit;
 	import com.icon.tasksoftware.screens.users.UserIndex;
+	import com.icon.tasksoftware.screens.users.UserNew;
+	import com.icon.tasksoftware.screens.users.UserShow;
 	
 	import feathers.controls.ScreenNavigatorItem;
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
@@ -117,15 +120,15 @@ package
 		private var team_new_screen:TeamNew;
 		private var team_show_screen:TeamShow;
 		
-		//private var user_edit:ScreenNavigatorItem;
+		private var user_edit:ScreenNavigatorItem;
 		private var user_index:ScreenNavigatorItem;
-		//private var user_new:ScreenNavigatorItem;
-		//private var user_show:ScreenNavigatorItem;
+		private var user_new:ScreenNavigatorItem;
+		private var user_show:ScreenNavigatorItem;
 		
-		//private var user_edit_screen:UserEdit;
+		private var user_edit_screen:UserEdit;
 		private var user_index_screen:UserIndex;
-		//private var user_new_screen:UserNew;
-		//private var user_show_screen:UserShow;
+		private var user_new_screen:UserNew;
+		private var user_show_screen:UserShow;
 		
 		public static var theme:IconMobileTheme;
 		
@@ -213,21 +216,21 @@ package
 			team_show = new ScreenNavigatorItem(team_show_screen, {back:onBack, teamEdit:onTeamEdit}, null);
 			nav.addScreen(TEAM_SHOW, team_show);
 			
-			//user_edit_screen = new UserEdit();
-			//user_edit = new ScreenNavigatorItem(user_edit_screen, {back:onBack}, null);
-			//nav.addScreen(USER_EDIT, user_edit);
+			user_edit_screen = new UserEdit();
+			user_edit = new ScreenNavigatorItem(user_edit_screen, {back:onBack}, null);
+			nav.addScreen(USER_EDIT, user_edit);
 			
 			user_index_screen = new UserIndex();
 			user_index = new ScreenNavigatorItem(user_index_screen, {back:onBack, userShow:onUserShow, userNew:onUserNew, userEdit:onUserEdit}, null);
 			nav.addScreen(USER_INDEX, user_index);
 			
-			//user_new_screen = new UserNew();
-			//user_new = new ScreenNavigatorItem(user_new_screen, {back:onBack}, null);
-			//nav.addScreen(USER_NEW, user_new);
+			user_new_screen = new UserNew();
+			user_new = new ScreenNavigatorItem(user_new_screen, {back:onBack}, null);
+			nav.addScreen(USER_NEW, user_new);
 			
-			//user_show_screen = new UserShow();
-			//user_show = new ScreenNavigatorItem(user_show_screen, {back:onBack, userEdit:onUserEdit}, null);
-			//nav.addScreen(USER_SHOW, user_show);
+			user_show_screen = new UserShow();
+			user_show = new ScreenNavigatorItem(user_show_screen, {back:onBack, userEdit:onUserEdit}, null);
+			nav.addScreen(USER_SHOW, user_show);
 			
 			nav.showScreen(LOGIN);
 			
@@ -316,18 +319,18 @@ package
 				case TEAM_SHOW:
 					output = team_show_screen;
 					break;
-				//case USER_EDIT:
-				//	output = user_edit_screen;
-				//	break;
+				case USER_EDIT:
+					output = user_edit_screen;
+					break;
 				case USER_INDEX:
 					output = user_index_screen;
 					break;
-				//case USER_NEW:
-				//	output = user_new_screen;
-				//	break;
-				//case USER_SHOW:
-				//	output = user_show_screen;
-				//	break;
+				case USER_NEW:
+					output = user_new_screen;
+					break;
+				case USER_SHOW:
+					output = user_show_screen;
+					break;
 				default:
 					if(screen)
 					{
@@ -388,15 +391,15 @@ package
 				case TEAM_SHOW:
 					loadTeamShow(item, true);
 					break;
-				//case USER_EDIT:
-				//	loadUserEdit(item, true);
-				//	break;
-				//case USER_NEW:
-				//	loadUserNew(item, true);
-				//	break;
-				//case USER_SHOW:
-				//	loadUserShow(item, true);
-				//	break;
+				case USER_EDIT:
+					loadUserEdit(item, true);
+					break;
+				case USER_NEW:
+					loadUserNew(item, true);
+					break;
+				case USER_SHOW:
+					loadUserShow(item, true);
+					break;
 				default:
 					nav.showScreenWithoutHistory(screen);
 			}
@@ -638,16 +641,16 @@ package
 		
 		private function loadUserShow(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedUser = User(item);
-		//	user_show_screen.user_id = selectedUser.id;
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(USER_SHOW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(USER_SHOW);
-		//	}
+			selectedUser = User(item);
+			user_show_screen.user_id = selectedUser.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(USER_SHOW);
+			}
+			else
+			{
+				nav.showScreen(USER_SHOW);
+			}
 		}
 		
 		private function onUserNew(e:Event, item:Object):void
@@ -657,15 +660,15 @@ package
 		
 		private function loadUserNew(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedUser = User(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(USER_NEW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(USER_NEW);
-		//	}
+			selectedUser = User(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(USER_NEW);
+			}
+			else
+			{
+				nav.showScreen(USER_NEW);
+			}
 		}
 		
 		private function onUserEdit(e:Event, item:Object):void
@@ -675,16 +678,16 @@ package
 		
 		private function loadUserEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedUser = User(item);
-		//	user_edit_screen.user_id = selectedUser.id;
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(USER_EDIT);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(USER_EDIT);
-		//	}
+			selectedUser = User(item);
+			user_edit_screen.user_id = selectedUser.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(USER_EDIT);
+			}
+			else
+			{
+				nav.showScreen(USER_EDIT);
+			}
 		}
 		
 		private function onLogin(e:Event):void

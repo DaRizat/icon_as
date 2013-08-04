@@ -1,4 +1,4 @@
-package com.icon.tasksoftware.screens.tasks
+package com.icon.tasksoftware.screens.users
 {
 	import com.icon.tasksoftware.Faker.Faker;
 	import com.icon.tasksoftware.controls.ApplicationScreen;
@@ -6,7 +6,7 @@ package com.icon.tasksoftware.screens.tasks
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
-	import com.icon.tasksoftware.data.models.Task;
+	import com.icon.tasksoftware.data.models.User;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.events.WebServiceRequestEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
@@ -19,45 +19,37 @@ package com.icon.tasksoftware.screens.tasks
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	
-	public class TaskNew extends ApplicationScreen
+	public class UserNew extends ApplicationScreen
 	{
 		private var header:DropDownHeader;
 		private var backButton:Button;
 		
 		private var nameLabel:Label;
 		private var nameInput:TextInput;
-		private var descriptionLabel:Label;
-		private var descriptionInput:TextInput;
-		private var imageLabel:Label;
-		private var imageInput:TextInput;
-		private var qrCodeLabel:Label;
-		private var qrCodeInput:TextInput;
+		private var emailLabel:Label;
+		private var emailInput:TextInput;
 		
 		private var cancelButton:Button;
 		private var submitButton:Button;
 		
-		private var _task:Task;
+		private var _user:User;
 		
-		public function TaskNew()
+		public function UserNew()
 		{
 			super();
-			screen_name = Main.TASK_NEW;
+			screen_name = Main.USER_NEW;
 			
 			addEventListener(Event.ADDED_TO_STAGE, reset);
 		}
 		
 		private function reset(e:Event):void
 		{
-			task = null;
+			user = null;
 			
 			nameInput.text = "";
 			nameInput.isEnabled = true;
-			descriptionInput.text = "";
-			descriptionInput.isEnabled = true;
-			imageInput.text = "";
-			imageInput.isEnabled = true;
-			qrCodeInput.text = "";
-			qrCodeInput.isEnabled = true;
+			emailInput.text = "";
+			emailInput.isEnabled = true;
 			
 			cancelButton.isEnabled = true;
 			submitButton.isEnabled = true;
@@ -75,29 +67,13 @@ package com.icon.tasksoftware.screens.tasks
 			nameInput.y = nameLabel.y + 36;
 			nameInput.width = actualWidth - 36;
 			
-			descriptionLabel.x = 18;
-			descriptionLabel.y = nameInput.y + 64;
-			descriptionLabel.width = actualWidth - 36;
+			emailLabel.x = 18;
+			emailLabel.y = nameInput.y + 64;
+			emailLabel.width = actualWidth - 36;
 			
-			descriptionInput.x = 18;
-			descriptionInput.y = descriptionLabel.y + 36;
-			descriptionInput.width = actualWidth - 36;
-			
-			imageLabel.x = 18;
-			imageLabel.y = descriptionInput.y + 64;
-			imageLabel.width = actualWidth - 36;
-			
-			imageInput.x = 18;
-			imageInput.y = imageLabel.y + 36;
-			imageInput.width = actualWidth - 36;
-			
-			qrCodeLabel.x = 18;
-			qrCodeLabel.y = imageInput.y + 64;
-			qrCodeLabel.width = actualWidth - 36;
-			
-			qrCodeInput.x = 18;
-			qrCodeInput.y = qrCodeLabel.y + 36;
-			qrCodeInput.width = actualWidth - 36;
+			emailInput.x = 18;
+			emailInput.y = emailLabel.y + 36;
+			emailInput.width = actualWidth - 36;
 			
 			cancelButton.width = (actualWidth - 54) / 2.0;
 			cancelButton.height = 64;
@@ -117,8 +93,8 @@ package com.icon.tasksoftware.screens.tasks
 				var response:WebServiceResponse = event.data as WebServiceResponse;
 				switch(response.endpoint)
 				{
-					case WebServiceEndpoints.TASK_CREATE:
-						dispatchEventWith("back", false, task);
+					case WebServiceEndpoints.USER_CREATE:
+						dispatchEventWith("back", false, user);
 						break;
 				}
 			}
@@ -128,7 +104,7 @@ package com.icon.tasksoftware.screens.tasks
 		{
 			super.initialize();
 			
-			header = new DropDownHeader(DropDownHeader.TASKS);
+			header = new DropDownHeader(DropDownHeader.USERS);
 			addChild(header);
 			
 			backButton = new Button();
@@ -144,26 +120,12 @@ package com.icon.tasksoftware.screens.tasks
 			nameInput = new TextInput();
 			addChild(nameInput);
 			
-			descriptionLabel = new Label();
-			descriptionLabel.text = "Description:";
-			addChild(descriptionLabel);
+			emailLabel = new Label();
+			emailLabel.text = "Email:";
+			addChild(emailLabel);
 			
-			descriptionInput = new TextInput();
-			addChild(descriptionInput);
-			
-			imageLabel = new Label();
-			imageLabel.text = "Image:";
-			addChild(imageLabel);
-			
-			imageInput = new TextInput();
-			addChild(imageInput);
-			
-			qrCodeLabel = new Label();
-			qrCodeLabel.text = "QR Code:";
-			addChild(qrCodeLabel);
-			
-			qrCodeInput = new TextInput();
-			addChild(qrCodeInput);
+			emailInput = new TextInput();
+			addChild(emailInput);
 			
 			cancelButton = new Button();
 			cancelButton.label = "Cancel";
@@ -183,35 +145,30 @@ package com.icon.tasksoftware.screens.tasks
 		
 		private function onCancel(e:Event):void
 		{
-			dispatchEventWith("back", false, task);
+			dispatchEventWith("back", false, user);
 		}
 		
 		private function onSubmit(e:Event):void
 		{
 			nameInput.isEnabled = false;
-			descriptionInput.isEnabled = false;
-			imageInput.isEnabled = false;
-			qrCodeInput.isEnabled = false;
+			emailInput.isEnabled = false;
 			cancelButton.isEnabled = false;
 			submitButton.isEnabled = false;
 			
 			// TODO: validate input
 			
-			task = new Task();
-			task.id = Faker.instance.GenerateID();
-			task.name = nameInput.text;
-			task.completed = false;
-			task.description = descriptionInput.text;
-			task.image = imageInput.text;
-			task.qr_code = qrCodeInput.text;
-			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.TASK_CREATE, screen_name, task);
+			user = new User();
+			user.id = Faker.instance.GenerateID();
+			user.name = nameInput.text;
+			user.email = emailInput.text;
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.USER_CREATE, screen_name, user);
 			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
-		public function get task():Task { return _task; }
-		public function set task(value:Task):void
+		public function get user():User { return _user; }
+		public function set user(value:User):void
 		{
-			_task = value;
+			_user = value;
 			invalidate( INVALIDATION_FLAG_DATA );
 		}
 	}

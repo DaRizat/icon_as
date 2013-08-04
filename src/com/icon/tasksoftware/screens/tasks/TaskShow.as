@@ -45,6 +45,10 @@ package com.icon.tasksoftware.screens.tasks
 			task = null;
 			
 			taskLabel.text = "";
+			taskDescription.text = "";
+			taskComplete.text = "";
+			taskImage.text = "";
+			taskQRCode.text = "";
 			
 			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.construct(WebServiceEndpoints.TASK_READ, {task:task_id}), screen_name);
 			EventHub.instance.relay(new WebServiceRequestEvent(request));

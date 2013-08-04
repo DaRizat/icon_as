@@ -1,11 +1,11 @@
-package com.icon.tasksoftware.screens.teams
+package com.icon.tasksoftware.screens.users
 {
 	import com.icon.tasksoftware.controls.ApplicationScreen;
 	import com.icon.tasksoftware.controls.DropDownHeader;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
-	import com.icon.tasksoftware.data.models.Team;
+	import com.icon.tasksoftware.data.models.User;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.events.WebServiceRequestEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
@@ -17,34 +17,34 @@ package com.icon.tasksoftware.screens.teams
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	
-	public class TeamShow extends ApplicationScreen
+	public class UserShow extends ApplicationScreen
 	{
 		private var header:DropDownHeader;
 		private var backButton:Button;
 		
-		private var teamLabel:Label;
-		private var teamIcon:Label;
+		private var userLabel:Label;
+		private var userEmail:Label;
 		private var editButton:Button;
 		
-		private var _team:Team;
-		private var _team_id:String;
+		private var _user:User;
+		private var _user_id:String;
 		
-		public function TeamShow()
+		public function UserShow()
 		{
 			super();
-			screen_name = Main.TEAM_SHOW;
+			screen_name = Main.USER_SHOW;
 			
 			addEventListener(Event.ADDED_TO_STAGE, reset);
 		}
 		
 		private function reset(e:Event):void
 		{
-			team = null;
+			user = null;
 			
-			teamLabel.text = "";
-			teamIcon.text = "";
+			userLabel.text = "";
+			userEmail.text = "";
 			
-			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.construct(WebServiceEndpoints.TEAM_READ, {team:team_id}), screen_name);
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.construct(WebServiceEndpoints.USER_READ, {user:user_id}), screen_name);
 			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
@@ -52,18 +52,18 @@ package com.icon.tasksoftware.screens.teams
 		{
 			header.width = actualWidth;
 			
-			teamLabel.x = 18;
-			teamLabel.y = header.height + 18;
-			teamLabel.width = actualWidth - 36;
+			userLabel.x = 18;
+			userLabel.y = header.height + 18;
+			userLabel.width = actualWidth - 36;
 			
-			teamIcon.x = 18;
-			teamIcon.y = teamLabel.y + 64;
-			teamIcon.width = actualWidth - 36;
+			userEmail.x = 18;
+			userEmail.y = userLabel.y + 64;
+			userEmail.width = actualWidth - 36;
 			
-			if(team)
+			if(user)
 			{
-				teamLabel.text = team.name;
-				teamIcon.text = team.icon;
+				userLabel.text = user.name;
+				userEmail.text = user.email;
 			}
 			
 			editButton.width = actualWidth - 36;
@@ -79,10 +79,10 @@ package com.icon.tasksoftware.screens.teams
 				var response:WebServiceResponse = event.data as WebServiceResponse;
 				switch(response.endpoint)
 				{
-					case WebServiceEndpoints.TEAM_READ:
-						team = Team(response.data);
-						teamLabel.text = team.name;
-						teamIcon.text = team.icon;
+					case WebServiceEndpoints.USER_READ:
+						user = User(response.data);
+						userLabel.text = user.name;
+						userEmail.text = user.email;
 						break;
 				}
 			}
@@ -92,7 +92,7 @@ package com.icon.tasksoftware.screens.teams
 		{
 			super.initialize();
 			
-			header = new DropDownHeader(DropDownHeader.TEAMS);
+			header = new DropDownHeader(DropDownHeader.USERS);
 			addChild(header);
 			
 			backButton = new Button();
@@ -101,13 +101,13 @@ package com.icon.tasksoftware.screens.teams
 			backButton.addEventListener(Event.TRIGGERED, onBack);
 			header.leftItems = new <DisplayObject>[backButton];
 			
-			teamLabel = new Label();
-			teamLabel.nameList.add(IconMobileTheme.PAGE_HEADER);
-			addChild(teamLabel);
+			userLabel = new Label();
+			userLabel.nameList.add(IconMobileTheme.PAGE_HEADER);
+			addChild(userLabel);
 			
-			teamIcon = new Label();
-			teamIcon.nameList.add(IconMobileTheme.PAGE_HEADER);
-			addChild(teamIcon);
+			userEmail = new Label();
+			userEmail.nameList.add(IconMobileTheme.PAGE_HEADER);
+			addChild(userEmail);
 			
 			editButton = new Button();
 			editButton.label = "Edit";
@@ -117,25 +117,25 @@ package com.icon.tasksoftware.screens.teams
 		
 		private function onBack(e:Event):void
 		{
-			dispatchEventWith("back", false, team);
+			dispatchEventWith("back", false, user);
 		}
 		
 		private function onEdit(e:Event):void
 		{
-			dispatchEventWith("teamEdit", false, team);
+			dispatchEventWith("userEdit", false, user);
 		}
 		
-		public function get team():Team { return _team; }
-		public function set team(value:Team):void
+		public function get user():User { return _user; }
+		public function set user(value:User):void
 		{
-			_team = value;
+			_user = value;
 			invalidate( INVALIDATION_FLAG_DATA );
 		}
 		
-		public function get team_id():String { return _team_id; }
-		public function set team_id(value:String):void
+		public function get user_id():String { return _user_id; }
+		public function set user_id(value:String):void
 		{
-			_team_id = value;
+			_user_id = value;
 			invalidate( INVALIDATION_FLAG_DATA );
 		}
 	}

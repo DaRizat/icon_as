@@ -215,6 +215,9 @@ package com.icon.tasksoftware.screens.tasks
 		private function onSubmit(e:Event):void
 		{
 			nameInput.isEnabled = false;
+			descriptionInput.isEnabled = false;
+			imageInput.isEnabled = false;
+			qrCodeInput.isEnabled = false;
 			cancelButton.isEnabled = false;
 			submitButton.isEnabled = false;
 			

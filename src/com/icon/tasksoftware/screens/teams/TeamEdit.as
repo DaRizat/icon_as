@@ -171,6 +171,7 @@ package com.icon.tasksoftware.screens.teams
 		private function onSubmit(e:Event):void
 		{
 			nameInput.isEnabled = false;
+			iconInput.isEnabled = false;
 			cancelButton.isEnabled = false;
 			submitButton.isEnabled = false;
 			
