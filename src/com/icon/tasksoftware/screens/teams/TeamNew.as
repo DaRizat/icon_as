@@ -1,11 +1,12 @@
-package com.icon.tasksoftware.screens.roles
+package com.icon.tasksoftware.screens.teams
 {
+	import com.icon.tasksoftware.Faker.Faker;
 	import com.icon.tasksoftware.controls.ApplicationScreen;
 	import com.icon.tasksoftware.controls.DropDownHeader;
 	import com.icon.tasksoftware.data.WebServiceEndpoints;
 	import com.icon.tasksoftware.data.WebServiceRequest;
 	import com.icon.tasksoftware.data.WebServiceResponse;
-	import com.icon.tasksoftware.data.models.Role;
+	import com.icon.tasksoftware.data.models.Team;
 	import com.icon.tasksoftware.events.EventHub;
 	import com.icon.tasksoftware.events.WebServiceRequestEvent;
 	import com.icon.tasksoftware.events.WebServiceResponseEvent;
@@ -18,39 +19,40 @@ package com.icon.tasksoftware.screens.roles
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	
-	public class RoleEdit extends ApplicationScreen
+	public class TeamNew extends ApplicationScreen
 	{
 		private var header:DropDownHeader;
 		private var backButton:Button;
 		
 		private var nameLabel:Label;
 		private var nameInput:TextInput;
+		private var iconLabel:Label;
+		private var iconInput:TextInput;
+		
 		private var cancelButton:Button;
 		private var submitButton:Button;
 		
-		private var _role:Role;
-		private var _role_id:String;
+		private var _team:Team;
 		
-		public function RoleEdit()
+		public function TeamNew()
 		{
 			super();
-			screen_name = Main.ROLE_EDIT;
+			screen_name = Main.TEAM_NEW;
 			
 			addEventListener(Event.ADDED_TO_STAGE, reset);
 		}
 		
 		private function reset(e:Event):void
 		{
-			role = null;
-			
-			nameInput.isEnabled = false;
-			cancelButton.isEnabled = false;
-			submitButton.isEnabled = false;
+			team = null;
 			
 			nameInput.text = "";
+			nameInput.isEnabled = true;
+			iconInput.text = "";
+			iconInput.isEnabled = true;
 			
-			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.construct(WebServiceEndpoints.ROLE_READ, {role:role_id}), screen_name);
-			EventHub.instance.relay(new WebServiceRequestEvent(request));
+			cancelButton.isEnabled = true;
+			submitButton.isEnabled = true;
 		}
 		
 		override protected function draw():void
@@ -64,10 +66,14 @@ package com.icon.tasksoftware.screens.roles
 			nameInput.x = 18;
 			nameInput.y = nameLabel.y + 36;
 			nameInput.width = actualWidth - 36;
-			if(role)
-			{
-				nameInput.text = role.name;
-			}
+			
+			iconLabel.x = 18;
+			iconLabel.y = nameInput.y + 64;
+			iconLabel.width = actualWidth - 36;
+			
+			iconInput.x = 18;
+			iconInput.y = iconLabel.y + 36;
+			iconInput.width = actualWidth - 36;
 			
 			cancelButton.width = (actualWidth - 54) / 2.0;
 			cancelButton.height = 64;
@@ -77,7 +83,7 @@ package com.icon.tasksoftware.screens.roles
 			submitButton.width = (actualWidth - 54) / 2.0;
 			submitButton.height = 64;
 			submitButton.x = cancelButton.x + cancelButton.width + 18;
-			submitButton.y = actualHeight - submitButton.height - 18;
+			submitButton.y = actualHeight - submitButton.height - 18;			
 		}
 		
 		override public function onWebServiceResponse(event:WebServiceResponseEvent):void
@@ -87,17 +93,8 @@ package com.icon.tasksoftware.screens.roles
 				var response:WebServiceResponse = event.data as WebServiceResponse;
 				switch(response.endpoint)
 				{
-					case WebServiceEndpoints.ROLE_UPDATE:
-						dispatchEventWith("back", false, role);
-						break;
-					case WebServiceEndpoints.ROLE_READ:
-						role = Role(response.data);
-						nameInput.text = role.name;
-						
-						nameInput.isEnabled = true;
-						cancelButton.isEnabled = true;
-						submitButton.isEnabled = true;
-						
+					case WebServiceEndpoints.TEAM_CREATE:
+						dispatchEventWith("back", false, team);
 						break;
 				}
 			}
@@ -107,7 +104,7 @@ package com.icon.tasksoftware.screens.roles
 		{
 			super.initialize();
 			
-			header = new DropDownHeader(DropDownHeader.ROLES);
+			header = new DropDownHeader(DropDownHeader.TEAMS);
 			addChild(header);
 			
 			backButton = new Button();
@@ -123,6 +120,13 @@ package com.icon.tasksoftware.screens.roles
 			nameInput = new TextInput();
 			addChild(nameInput);
 			
+			iconLabel = new Label();
+			iconLabel.text = "Icon:";
+			addChild(iconLabel);
+			
+			iconInput = new TextInput();
+			addChild(iconInput);
+			
 			cancelButton = new Button();
 			cancelButton.label = "Cancel";
 			cancelButton.addEventListener(Event.TRIGGERED, onCancel);
@@ -136,12 +140,12 @@ package com.icon.tasksoftware.screens.roles
 		
 		private function onBack(e:Event):void
 		{
-			dispatchEventWith("back", false, role);
+			dispatchEventWith("back");
 		}
 		
 		private function onCancel(e:Event):void
 		{
-			dispatchEventWith("back", false, role);
+			dispatchEventWith("back", false, team);
 		}
 		
 		private function onSubmit(e:Event):void
@@ -152,22 +156,18 @@ package com.icon.tasksoftware.screens.roles
 			
 			// TODO: validate input
 			
-			role.name = nameInput.text;
-			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.ROLE_UPDATE, screen_name, role);
+			team = new Team();
+			team.id = Faker.instance.GenerateID();
+			team.name = nameInput.text;
+			team.icon = iconInput.text;
+			var request:WebServiceRequest = new WebServiceRequest(WebServiceEndpoints.TEAM_CREATE, screen_name, team);
 			EventHub.instance.relay(new WebServiceRequestEvent(request));
 		}
 		
-		public function get role():Role { return _role; }
-		public function set role(value:Role):void
+		public function get team():Team { return _team; }
+		public function set team(value:Team):void
 		{
-			_role = value;
-			invalidate( INVALIDATION_FLAG_DATA );
-		}
-		
-		public function get role_id():String { return _role_id; }
-		public function set role_id(value:String):void
-		{
-			_role_id = value;
+			_team = value;
 			invalidate( INVALIDATION_FLAG_DATA );
 		}
 	}

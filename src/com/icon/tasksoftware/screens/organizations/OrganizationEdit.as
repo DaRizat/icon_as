@@ -63,7 +63,7 @@ package com.icon.tasksoftware.screens.organizations
 			nameLabel.width = actualWidth - 36;
 			
 			nameInput.x = 18;
-			nameInput.y = nameLabel.y + nameLabel.height + nameInput.paddingTop;
+			nameInput.y = nameLabel.y + 36;
 			nameInput.width = actualWidth - 36;
 			if(organization)
 			{

@@ -139,6 +139,7 @@ package com.icon.tasksoftware.controls
 				closePopUpList();
 				return;
 			}
+			_list.selectedIndex = selectedIndex;
 			_popUpContentManager.open(_list, this);
 			_list.scrollToDisplayIndex(_selectedIndex);
 			_list.validate();

@@ -24,7 +24,10 @@ package
 	import com.icon.tasksoftware.screens.tasks.TaskIndex;
 	import com.icon.tasksoftware.screens.tasks.TaskNew;
 	import com.icon.tasksoftware.screens.tasks.TaskShow;
+	import com.icon.tasksoftware.screens.teams.TeamEdit;
 	import com.icon.tasksoftware.screens.teams.TeamIndex;
+	import com.icon.tasksoftware.screens.teams.TeamNew;
+	import com.icon.tasksoftware.screens.teams.TeamShow;
 	import com.icon.tasksoftware.screens.users.UserIndex;
 	
 	import feathers.controls.ScreenNavigatorItem;
@@ -104,15 +107,15 @@ package
 		private var task_new_screen:TaskNew;
 		private var task_show_screen:TaskShow;
 		
-		//private var team_edit:ScreenNavigatorItem;
+		private var team_edit:ScreenNavigatorItem;
 		private var team_index:ScreenNavigatorItem;
-		//private var team_new:ScreenNavigatorItem;
-		//private var team_show:ScreenNavigatorItem;
+		private var team_new:ScreenNavigatorItem;
+		private var team_show:ScreenNavigatorItem;
 		
-		//private var team_edit_screen:TeamEdit;
+		private var team_edit_screen:TeamEdit;
 		private var team_index_screen:TeamIndex;
-		//private var team_new_screen:TeamNew;
-		//private var team_show_screen:TeamShow;
+		private var team_new_screen:TeamNew;
+		private var team_show_screen:TeamShow;
 		
 		//private var user_edit:ScreenNavigatorItem;
 		private var user_index:ScreenNavigatorItem;
@@ -194,21 +197,21 @@ package
 			task_show = new ScreenNavigatorItem(task_show_screen, {back:onBack, taskEdit:onTaskEdit}, null);
 			nav.addScreen(TASK_SHOW, task_show);
 			
-			//team_edit_screen = new TeamEdit();
-			//team_edit = new ScreenNavigatorItem(team_edit_screen, {back:onBack}, null);
-			//nav.addScreen(TEAM_EDIT, team_edit);
+			team_edit_screen = new TeamEdit();
+			team_edit = new ScreenNavigatorItem(team_edit_screen, {back:onBack}, null);
+			nav.addScreen(TEAM_EDIT, team_edit);
 			
 			team_index_screen = new TeamIndex();
 			team_index = new ScreenNavigatorItem(team_index_screen, {back:onBack, teamShow:onTeamShow, teamNew:onTeamNew, teamEdit:onTeamEdit}, null);
 			nav.addScreen(TEAM_INDEX, team_index);
 			
-			//team_new_screen = new TeamNew();
-			//team_new = new ScreenNavigatorItem(team_new_screen, {back:onBack}, null);
-			//nav.addScreen(TEAM_NEW, team_new);
+			team_new_screen = new TeamNew();
+			team_new = new ScreenNavigatorItem(team_new_screen, {back:onBack}, null);
+			nav.addScreen(TEAM_NEW, team_new);
 			
-			//team_show_screen = new TeamShow();
-			//team_show = new ScreenNavigatorItem(team_show_screen, {back:onBack, teamEdit:onTeamEdit}, null);
-			//nav.addScreen(TEAM_SHOW, team_show);
+			team_show_screen = new TeamShow();
+			team_show = new ScreenNavigatorItem(team_show_screen, {back:onBack, teamEdit:onTeamEdit}, null);
+			nav.addScreen(TEAM_SHOW, team_show);
 			
 			//user_edit_screen = new UserEdit();
 			//user_edit = new ScreenNavigatorItem(user_edit_screen, {back:onBack}, null);
@@ -301,18 +304,18 @@ package
 				case TASK_SHOW:
 					output = task_show_screen;
 					break;
-				//case TEAM_EDIT:
-				//	output = team_edit_screen;
-				//	break;
+				case TEAM_EDIT:
+					output = team_edit_screen;
+					break;
 				case TEAM_INDEX:
 					output = team_index_screen;
 					break;
-				//case TEAM_NEW:
-				//	output = team_new_screen;
-				//	break;
-				//case TEAM_SHOW:
-				//	output = team_show_screen;
-				//	break;
+				case TEAM_NEW:
+					output = team_new_screen;
+					break;
+				case TEAM_SHOW:
+					output = team_show_screen;
+					break;
 				//case USER_EDIT:
 				//	output = user_edit_screen;
 				//	break;
@@ -376,15 +379,15 @@ package
 				case TASK_SHOW:
 					loadTaskShow(item, true);
 					break;
-				//case TEAM_EDIT:
-				//	loadTeamEdit(item, true);
-				//	break;
-				//case TEAM_NEW:
-				//	loadTeamNew(item, true);
-				//	break;
-				//case TEAM_SHOW:
-				//	loadTeamShow(item, true);
-				//	break;
+				case TEAM_EDIT:
+					loadTeamEdit(item, true);
+					break;
+				case TEAM_NEW:
+					loadTeamNew(item, true);
+					break;
+				case TEAM_SHOW:
+					loadTeamShow(item, true);
+					break;
 				//case USER_EDIT:
 				//	loadUserEdit(item, true);
 				//	break;
@@ -578,16 +581,16 @@ package
 		
 		private function loadTeamShow(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTeam = Team(item);
-		//	team_show_screen.team_id = selectedTeam.id;
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TEAM_SHOW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TEAM_SHOW);
-		//	}
+			selectedTeam = Team(item);
+			team_show_screen.team_id = selectedTeam.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TEAM_SHOW);
+			}
+			else
+			{
+				nav.showScreen(TEAM_SHOW);
+			}
 		}
 		
 		private function onTeamNew(e:Event, item:Object):void
@@ -597,15 +600,15 @@ package
 		
 		private function loadTeamNew(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTeam = Team(item);
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TEAM_NEW);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TEAM_NEW);
-		//	}
+			selectedTeam = Team(item);
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TEAM_NEW);
+			}
+			else
+			{
+				nav.showScreen(TEAM_NEW);
+			}
 		}
 		
 		private function onTeamEdit(e:Event, item:Object):void
@@ -615,16 +618,16 @@ package
 		
 		private function loadTeamEdit(item:Object, ignoreHistory:Boolean = false):void
 		{
-		//	selectedTeam = Team(item);
-		//	team_edit_screen.team_id = selectedTeam.id;
-		//	if(ignoreHistory)
-		//	{
-		//		nav.showScreenWithoutHistory(TEAM_EDIT);
-		//	}
-		//	else
-		//	{
-		//		nav.showScreen(TEAM_EDIT);
-		//	}
+			selectedTeam = Team(item);
+			team_edit_screen.team_id = selectedTeam.id;
+			if(ignoreHistory)
+			{
+				nav.showScreenWithoutHistory(TEAM_EDIT);
+			}
+			else
+			{
+				nav.showScreen(TEAM_EDIT);
+			}
 		}
 		
 		//	USER
